@@ -15,11 +15,9 @@
 
 <h4>&nbsp&nbsp Meilleures ventes &nbsp&nbsp&nbsp&nbsp<a class="see_more" href="meilleures_ventes.php">See More ></a></h4>
 
-<span class="border">
-
     <div class="top-content">
         <div class="container-fluid">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <div id="carousel-example1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
                         <img src="photos/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
@@ -46,11 +44,11 @@
                         <img src="photos/8.jpg" class="img-fluid mx-auto d-block" alt="img8">
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#carousel-example1" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#carousel-example1" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -58,15 +56,14 @@
         </div>
     </div>
 
-</span><hr><br>
+<hr><br>
 
 <h4>&nbsp&nbsp Achetez-le maintenant &nbsp&nbsp&nbsp&nbsp<a class="see_more" href="acheter_maintenant.php">See More ></a></h4>
 
-<span class="border">
 
 <div class="top-content">
         <div class="container-fluid">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <div id="carousel-example2" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
                         <img src="photos/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
@@ -93,11 +90,11 @@
                         <img src="photos/8.jpg" class="img-fluid mx-auto d-block" alt="img8">
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -105,15 +102,13 @@
         </div>
     </div>
 
-</span><hr><br>
+<hr><br>
 
 <h4>&nbsp&nbsp Enchères &nbsp&nbsp&nbsp&nbsp<a class="see_more" href="encheres.php">See More ></a></h4>
 
-<span class="border">
-
 <div class="top-content">
         <div class="container-fluid">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <div id="carousel-example3" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner row w-100 mx-auto" role="listbox">
                     <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
                         <img src="photos/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
@@ -140,11 +135,11 @@
                         <img src="photos/8.jpg" class="img-fluid mx-auto d-block" alt="img8">
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#carousel-example3" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#carousel-example3" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -152,35 +147,9 @@
         </div>
     </div>
 
-</span><br><br>
+<br><br>
 
-<script>
-
-$('#carousel-example').on('slide.bs.carousel', function (e) 
-{
-    var $e = $(e.relatedTarget);
-    var idx = $e.index();
-    var itemsPerSlide = ;
-    var totalItems = $('.carousel-item').length;
- 
-    if (idx >= totalItems-(itemsPerSlide-1)) 
-    {
-        var it = itemsPerSlide - (totalItems - idx);
-        for (var i=0; i<it; i++) 
-        {
-
-            if (e.direction=="left") 
-            {
-                $('.carousel-item').eq(i).appendTo('.carousel-inner');
-            }
-            else 
-            {
-                $('.carousel-item').eq(0).appendTo('.carousel-inner');
-            }
-        }
-    }
-});
-</script>
+<script src="js/home.js"></script>
 
 <?php include("footer/footer.php");   ?>
 
