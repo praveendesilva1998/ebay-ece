@@ -37,17 +37,6 @@ function token_generator()
     return $token;
 }
 
-function validation_errors($error_message)
-{
-    $error_message = '
-            <h2><strong>Warning!</strong> ' .$error_message .'
-            </h2>
-
-            ';
-
-    return $error_message;
-}
-
 
 function email_exists($email)
 {
@@ -86,6 +75,12 @@ function validate_user_registration()
         $email = clean($_POST['email']);
         $password = clean($_POST['password']);
         $confirm_password = clean($_POST['confirm_password']);
+        $address1 = clean($_POST['address1']);
+        $address2 = clean($_POST['address2']);
+        $zip = clean($_POST['zip']);
+        $city = clean($_POST['city']);
+        $country = clean($_POST['country']);
+        $tel = clean($_POST['tel']);
     }
 
     if(isset($_POST['register-submit']))
@@ -93,7 +88,12 @@ function validate_user_registration()
         $_SESSION['first_name'] = $first_name;
         $_SESSION['last_name'] = $last_name;
         $_SESSION['email'] = $email;
-    
+        $_SESSION['address1'] = $address1;
+        $_SESSION['address2'] = $address2;
+        $_SESSION['zip'] = $zip;
+        $_SESSION['city'] = $city;
+        $_SESSION['country'] = $country;
+        $_SESSION['tel'] = $tel;
 
         if(email_exists($email))
         {
@@ -114,14 +114,16 @@ function validate_user_registration()
         {
             foreach ($errors as $error)
             {
-                echo validation_errors($error);
+                echo "";
             }
         }
         else
         {
-            if(register_user($first_name, $last_name, $email, $password))
+            if(register_user($first_name, $last_name, $email, $password, $address1, $address2, $zip, $city, $country, $tel))
             {
-                set_message("<h3>Please check your email or Spam folder for activation link <h3>");
+                set_message("<div class='alert alert-success' role='alert'>
+                Un lien d'activation de votre compte à été envoyé dans votre boîte mail !
+                </div>");
 
                 redirect("message.php");
 
@@ -129,7 +131,9 @@ function validate_user_registration()
             }
             else
             {
-                set_message("<h3>Sorry, we could not register the user<h3>");
+                set_message("<div class='alert alert-danger' role='alert'>
+                    Désolé, on ne peut pas inscrire cet utilisateur !
+                  </div>");
 
                 redirect("message.php");
             }
@@ -141,12 +145,19 @@ function validate_user_registration()
 
 
 
-function register_user($first_name, $last_name, $email, $password)
+function register_user($first_name, $last_name, $email, $password, $address1, $address2, $zip, $city, $country, $tel)
 {
     $first_name = escape($first_name);
     $last_name = escape($last_name);
     $email = escape($email);
     $password= escape($password);
+    $address1= escape($address1);
+    $address2= escape($address2);
+    $zip= escape($zip);
+    $city= escape($city);
+    $country= escape($country);
+    $tel= escape($tel);
+
 
 
     if(email_exists($email))
@@ -161,8 +172,8 @@ function register_user($first_name, $last_name, $email, $password)
         $profile_pic = "uploads/profile_random.png";
         $photo_status = "1";
 
-        $sql = "INSERT INTO acheteur (first_name, last_name, email, password, validation_code, active)";
-        $sql.= " VALUES('$first_name','$last_name','$email','$password', '$validation_code', 0)";
+        $sql = "INSERT INTO acheteur (first_name, last_name, email, password, validation_code, active, Adresse1, Adresse2, Ville, CodePostal, Pays, Telephone)";
+        $sql.= " VALUES('$first_name','$last_name','$email','$password', '$validation_code', 0, '$address1', '$address2', '$city', '$zip', '$country', '$tel')";
         $result = query($sql);
 
         $subject = "Activate account";
@@ -205,13 +216,17 @@ function activate_user()
                 $result2 = query($sql2);
                 confirm($result2);
 
-                set_message("<h3>Your account has been activated, please login</h3>");
+                set_message("<div class='alert alert-success' role='alert'>
+                    Votre compte est activé. Veuillez-vous connecter !
+                  </div>");
 
                 redirect("login.php");
             }
             else
             {
-                set_message("<h3>Sorry, your account could not be activated</h3>");
+                set_message("<div class='alert alert-danger' role='alert'>
+                    Désolé, votre compte ne peut pas être activé !
+                  </div>");
 
                 redirect("index.php");
             }
@@ -251,7 +266,7 @@ function validate_user_login()
         {
             foreach ($errors as $error)
             {
-                echo validation_errors($error);
+                echo "";
             }
         }
         else
@@ -262,7 +277,8 @@ function validate_user_login()
             }
             else
             {
-                echo validation_errors("<h3>Your credentials are not correct</h3>");
+                set_message("<div class='alert alert-danger' role='alert'> Vos identifiants sont incorrectes !
+              </div>");
             }
         } 
     }
@@ -354,17 +370,22 @@ function recover_password()
 
                 if(!send_mail($email, $subject, $message, $headers))
                 {
-                    echo validation_errors("<h3>email could not be sent</h3>");
+                    set_message("<div class='alert alert-danger' role='alert'>
+                    Mail n'a pas pu être envoyé !
+                    </div>");
                 }
 
-                set_message("<h3>Please check your email or spam folder for a password reset code</h3>");
+                set_message("<div class='alert alert-success' role='alert'>
+                Un mail de réinitialisation de votre mot de passe a été envoyé dans votre boîte mail !
+                </div>");
 
                 redirect("message.php");
 
             }
             else
             {
-                echo validation_errors("<h3>This email does not exist</h3>");
+                set_message("<div class='alert alert-danger' role='alert'> Adresse mail n'existe pas !
+                </div>");
             }
         }
         else
@@ -411,14 +432,18 @@ function validate_code()
                 }
                 else
                 {
-                    echo validation_errors("Sorry, wrong validation code");
+                    set_message("<div class='alert alert-danger' role='alert'>
+                    Code de validation est faux !
+                  </div>");
                 }
             }
         }
     }
     else
     {
-        set_message("<h3>Sorry, your validation cookie was expired</h3>");
+        set_message("<div class='alert alert-danger' role='alert'>
+        Désolé, votre validation de cookie est expiré
+        </div>");
 
         redirect("recover.php");
     }
@@ -439,7 +464,9 @@ function password_reset()
                     $sql = "UPDATE acheteur SET password = '".escape($updated_password)."', validation_code = 0 WHERE email = '".escape($_GET['email'])."'";
                     query($sql);
 
-                    set_message("<h3>Your password has been updated, please Log in</h3>");
+                    set_message("<div class='alert alert-success' role='alert'>
+                    Votre mot de passe est mise à jour, veuillez-vous connecter !
+                    </div>");
                     redirect("login.php");
                 }    
             }
@@ -449,7 +476,8 @@ function password_reset()
     }
     else
     {
-        set_message("<h3>Sorry, your time has expired</h3>");
+        set_message("<div class='alert alert-danger' role='alert'>Désolé, votre temps est expiré !
+        </div>");
         redirect("recover.php");
     }
 }

@@ -1,7 +1,8 @@
-<?php include("header_login.php");  ?>
+<?php include("header.php");  ?>
+<?php validate_user_registration();  ?>
 <?php include("menu.php");  ?>
         
-        <?php validate_user_registration();  ?>
+        
         <br><br><h2>&nbsp;&nbsp;Create an account</h2><br><br><br>
 
         <div class="body-content">
@@ -44,10 +45,64 @@
             <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password" required> 
         </div>
 
+        <div class="form-group">
+        <input type="text" name="address1" id="address1" class="form-control" placeholder="Address Line 1" value="<?php
+                if(isset($_SESSION['Adresse1']))
+                {
+                    echo $_SESSION['Adresse1'];
+                }
+                ?>" required>
+        </div>
+
+        <div class="form-group">
+        <input type="text" name="address2" id="address2" class="form-control" placeholder="Address Line 2" value="<?php
+                if(isset($_SESSION['Adresse2']))
+                {
+                    echo $_SESSION['Adresse2'];
+                }
+                ?>">
+        </div>
+
+        <div class="form-group">
+        <input type="text" name="zip" id="zip" class="form-control" placeholder="ZIP Code" value="<?php
+                if(isset($_SESSION['CodePostal']))
+                {
+                    echo $_SESSION['CodePostal'];
+                }
+                ?>" required>
+        </div>
+
+        <div class="form-group">
+        <input type="text" name="city" id="city" class="form-control" placeholder="City" value="<?php
+                if(isset($_SESSION['Ville']))
+                {
+                    echo $_SESSION['Ville'];
+                }
+                ?>" required>
+        </div>
+
+        <div class="form-group">
+        <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="<?php
+                if(isset($_SESSION['Pays']))
+                {
+                    echo $_SESSION['Pays'];
+                }
+                ?>" required>
+        </div>
+
+        <div class="form-group">
+        <input type="text" name="tel" id="tel" class="form-control" placeholder="Phone Number" value="<?php
+                if(isset($_SESSION['Telephone']))
+                {
+                    echo $_SESSION['Telephone'];
+                }
+                ?>" required>
+        </div>
+
         <button type="submit" class="btn btn-primary" name="register-submit" id="register-submit">REGISTER</button>
 
         <div class="text">
-            <br><h5><a href="login.php">Already have an account ? Sign in here</a>LOGIN</h5><br><br>
+            <br><h5><a href="login.php">Already have an account ? Sign in here</a></h5><br><br>
         </div>
 
     </form></center>

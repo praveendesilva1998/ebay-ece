@@ -1,5 +1,8 @@
-<?php include("header_login.php");  ?>
-        <?php display_message();  ?>
+<?php include("header.php"); 
+include("menu.php");  
+display_message();?>
+
+        
 
         
 

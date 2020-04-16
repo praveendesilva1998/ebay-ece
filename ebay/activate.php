@@ -1,4 +1,4 @@
-<?php include("header_login.php") ?>
+<?php include("header.php") ?>
 
 
 	<div class="jumbotron">
@@ -8,5 +8,6 @@
 
 
 </body>
+
 
 </html>

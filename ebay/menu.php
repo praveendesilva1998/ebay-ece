@@ -13,7 +13,7 @@
                 CATEGORIES
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="ferraires_tresor.php">FERRAILLES OU TRESOR</a>
+                    <a class="dropdown-item" href="ferrailles_tresor.php">FERRAILLES OU TRESOR</a>
                     <a class="dropdown-item" href="bon_musee.php">BON POUR LE MUSEE</a>
                     <a class="dropdown-item" href="accessoires_vip.php">ACCESSOIRE VIP</a>
                 </div>
@@ -44,15 +44,24 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="panier.php">PANIER</a>
+                <a class="nav-link" href="admin.php">ADMIN</a>
+            </li>
+
+
+            <li class="nav-item">
+                <?php if(logged_in()):  ?>
+                    <a class="nav-link" href="panier.php"><i class="fa fa-shopping-cart" style="font-size:30px"></i></a>
+                <?php endif;  ?>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="admin.php">ADMIN</a>
+                <?php if(logged_in()):  ?>
+                    <a class="nav-link" href="logout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i></a>
+                <?php endif;  ?>
             </li>
-            <?php if(logged_in()):  ?>
-                    <a class="nav-link" href="logout.php">DECONNECTER</a>
-				<?php endif;  ?>
+
+            
+
         </ul>
 
     </div>

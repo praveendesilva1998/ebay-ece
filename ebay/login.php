@@ -1,4 +1,6 @@
-<?php include("header_login.php");  ?>
+<?php include("header.php");  ?>
+<?php display_message();  ?>
+<?php validate_user_login();  ?>
 <?php include("menu.php");  ?>
 
 
@@ -9,10 +11,6 @@
             redirect("compte.php");
         }   ?>	
 
-
-        <?php display_message();  ?>
-
-        <?php validate_user_login();  ?>
 
         <center><form id="login-form" method="post" role="form">
         <div class="form-group">

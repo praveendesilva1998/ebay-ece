@@ -8,6 +8,7 @@ error_reporting(E_ALL);
 
 include("db.php");
 include("fonctions.php");
+include("item.php");
 
 
 

@@ -1,10 +1,11 @@
-<?php include("header_login.php");  ?>
+<?php include("header.php");
+display_message();
+recover_password();
+include("menu.php"); ?>
 
-    <?php  display_message(); ?>
+    
 
-    <?php recover_password();  ?>
-
-    <br><br><h2>&nbsp;&nbsp;Recover your Password</h2><br><br><br>
+    <br><br><h2>&nbsp;&nbsp;Réinitialiser votre Mot de Passe</h2><br><br><br>
 
     <center><form id="recover-form" method="post" role="form" autocomplete="off">
         <div class="form-group">

@@ -1,4 +1,4 @@
-<?php include("header_home.php"); ?>	
+<?php include("header.php"); ?>	
 <?php include("menu.php");  ?>
 
 <div class="jumbotron">
@@ -154,7 +154,8 @@
 
 <br><br>
 
-<script src="js/home.js"></script>
+
+
 
 <?php include("footer/footer.php");   ?>
 
