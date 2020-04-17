@@ -3,7 +3,6 @@
     
 function create_item($con, $id)
 {
-    $email = $_SESSION['email'];
     $data_query = mysqli_query($con, "SELECT * FROM item WHERE id = $id");
 
     if(mysqli_num_rows($data_query) > 0)
@@ -94,7 +93,16 @@ function create_item($con, $id)
 
     if(isset($_POST['ajouter_panier']))
     {
-        $sql =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$prix', '$image1', '$type')");
+        if(logged_in())
+        {
+            $email = $_SESSION['email'];
+            $sql =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$prix', '$image1', '$type')");
+        }
+        else
+        {
+            redirect("login.php");
+        }
+        
     }
         
 }
