@@ -3,7 +3,7 @@
     
 function create_item($con, $id)
 {
-    $data_query = mysqli_query($con, "SELECT * FROM item WHERE id = $id  AND prix2='0' AND Vendu='0'");
+    $data_query = mysqli_query($con, "SELECT * FROM item WHERE id = $id");
 
     if(mysqli_num_rows($data_query) > 0)
     {
@@ -19,10 +19,8 @@ function create_item($con, $id)
             $categorie = $row['Categorie'];
             $description = $row['Description'];
             $type = $row['typeVente'];
-            $offre = $row['Offre'];
-            $vendu = $row['Vendu'];
             
-            if($type == "Achat Immédiat")
+            if($type == 'Achat Immédiat')
             {
                 $str = "
             
@@ -80,7 +78,7 @@ function create_item($con, $id)
 
                 </center>";
             }
-            else if($type == "Achat à Enchère")
+            else if($type == 'Achat à Enchère')
             {
                 $str = "
             
@@ -123,17 +121,17 @@ function create_item($con, $id)
                             $description
                         </div>
                         <div class='col-4'>
-                        <h4>Enchérir</h4>
+                            <h4>$prix €</h4>
                             <form action='article.php?id=$id' method='post'>
-                            <input type='texte' name='prix_donne' placeholder='Supérieur à $prix €'><br>
-                                <br><button name='encherir' class='btn btn-primary'>Valider l'enchère</button>
+                                <button name='ajouter_panier' class='btn btn-primary'>Ajouter au Panier<i class='fa fa-shopping-cart' style='font-size:30px'></i></button>
                             </form>
                         </div>
                     </div>
                 </div>
+
                 </center>";
             }
-            else if($type == "Meilleure Offre")
+            else
             {
                 $str = "
             
@@ -178,9 +176,8 @@ function create_item($con, $id)
                         </div>
                         <div class='col-4'>
                             <h4>$prix €</h4>
-                            <form action='negociation.php?id=$id' method='post'>
-                                <input type='number' name='offre_montant'><br><br>
-                                <button name='demander_offre' class='btn btn-primary'>Demander un Offre</button>
+                            <form action='article.php?id=$id' method='post'>
+                                <button name='ajouter_panier' class='btn btn-primary'>Ajouter au Panier<i class='fa fa-shopping-cart' style='font-size:30px'></i></button>
                             </form>
                         </div>
                     </div>
@@ -191,82 +188,17 @@ function create_item($con, $id)
 
         }
     }
-    else
-    {
-        header("Location: index.php");
-    }
 
     echo $str;
     
+                       
+
     if(isset($_POST['ajouter_panier']))
     {
         if(logged_in())
         {
             $email = $_SESSION['email'];
             $sql =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$price', '$image1', '$type')");
-        }
-        else
-        {
-            redirect("login.php");
-        }
-        
-    }  
-    
-    if(isset($_POST['encherir']))
-    {
-        if(logged_in())
-        {
-            $prix_donne = $_POST['prix_donne'];
-            if ($prix_donne > $prix2) {
-                $email = $_SESSION['email'];
-                if ($prix_donne > $prix1) {
-                    $sql1 =  mysqli_query($con, " UPDATE `item` SET `prix1` = '$prix_donne', `prix2` = '$prix1', `mail_client` = '$email' WHERE `item`.`ID` = $id;");
-                    $sql2 =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$prix_donne', '$image1', '$type')");
-                }
-                else {
-                    $sql1 =  mysqli_query($con, " UPDATE `item` SET `prix2` = '$prix_donne' WHERE `item`.`ID` = $id;");
-                    $sql2 =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$price', '$image1', '$type')");
-                }
-            }
-            else {
-                $sql2 =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$prix_donne', '$image1', '$type')");
-            }
-
-
-        }
-        else
-        {
-            redirect("login.php");
-        }
-        
-    }
-
-    if(isset($_POST['demander_offre']))
-    {
-        if(logged_in())
-        {
-            $montant = $_POST['offre_montant'];
-            $email = $_SESSION['email'];
-
-            if($montant > 0 && $montant <= $price)
-            {
-                if($offre < 5)
-                {
-                    $offre = $offre + 1;
-                    $sql = mysqli_query($con, "UPDATE item SET Offre='$offre', prix2='$montant', mail_client='$email' WHERE ID ='$id'");
-                    $sql1 =  mysqli_query($con, "INSERT INTO panier (user, titre, prix, photo, type) VALUES ('$email', '$titre', '$price', '$image1', '$type')");
-                }
-                else
-                {
-                    $sql = mysqli_query($con, "UPDATE item SET Vendu='1' WHERE ID ='$id'");
-                }
-            }
-            else
-            {
-                set_message("<div class='alert alert-warning'>Veuillez choisir un prix entre 0 € et $prix €</div>");
-            }
-
-
         }
         else
         {
@@ -302,7 +234,7 @@ function display_item($con, $sql)
             $description = $row['Description'];
                     
 
-            $str .= "<center>
+                $str .= "<center>
                 <div class='container'>
                     <div class='row'>
                         <div class='col-2'>
@@ -398,66 +330,6 @@ function panier_item($con, $sql)
     echo $str;
 
     
-}
-
-
-
-function negocier_item($con, $sql)
-{
-
-    $str = "";
-
-    $data_query = mysqli_query($con, $sql);
-
-    if(mysqli_num_rows($data_query) > 0)
-    {
-
-        while($row = mysqli_fetch_array($data_query))
-        {
-            $id = $row['ID'];
-            $titre = $row['Nom'];
-            $image1 = $row['Image1'];
-            $image2 = $row['Image2'];
-            $image3 = $row['Image3'];
-            $price = $row['Prix'];
-            $prix = number_format($price, 2, ',', ' ');
-            $type = $row['typeVente'];
-            $categorie = $row['Categorie'];
-            $description = $row['Description'];
-                    
-            
-            $str .= "<center>
-                <div class='container'>
-                    <div class='row'>
-                        <div class='col-2'>
-                        </div>
-                        <div class='col-8'>
-                        <div class='card text-center'>
-                            <div class='card-header'>
-                                <a href='negociation.php?id=$id'>
-                                <h5>$titre &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp $prix €</h5>
-                                </div>
-                                <div class='card-body'>
-                                    <img src='$image1' class='img1'></a>
-                                </div>
-                                <div class='card-footer text-muted'>
-                                    Catégorie : $categorie &nbsp&nbsp&nbsp Type de Vente : $type
-                                </div>
-                            </div>
-               
-                        </div> 
-                        <div class='col-2'>
-                        </div>
-                    </div>
-                </div>
-
-                </center>    "; 
-
-            
-            }
-    }
-
-    echo $str;
 }
 
 function affichage_vendeur($con, $sql)
@@ -588,45 +460,6 @@ function index_item($con, $sql)
                                 <br>$prix €</h6></center>
                                 </div>
                             </a>
-                        </div>
-
-                ";
-                
-
-            
-            }
-    }
-
-    echo $str;
-}
-
-function compte_item($con, $sql)
-{
-
-    $str = "";
-
-    $data_query = mysqli_query($con, $sql);
-
-    if(mysqli_num_rows($data_query) > 0)
-    {
-
-        while($row = mysqli_fetch_array($data_query))
-        {
-            $id = $row['ID'];
-            $titre = $row['Nom'];
-            $image1 = $row['Image1'];
-            $price = $row['Prix'];
-            $prix = number_format($price, 2, ',', ' ');
-            $type = $row['typeVente'];
-                    
-
-                $str .= "
-                        <div class='card' style='width: 13rem;'>
-                                <img class='card-img-top' src='$image1' alt='Image'>
-                                <div class='card-body'>
-                                <center><h6 class='card-text'>$titre
-                                <br>$prix €</h6></center>
-                                </div>
                         </div>
 
                 ";
