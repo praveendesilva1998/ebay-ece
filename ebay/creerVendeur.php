@@ -2,10 +2,6 @@
 include("header.php");
 include("menu.php");
 
-if(!logged_in_vendeur())
-{
-    redirect("vendeurLogin.php");
-}
 if(logged_in())
 {
   redirect("logout.php");
