@@ -1,6 +1,6 @@
 <?php
 
-$con = mysqli_connect('localhost', 'root', '', 'ebay_ece');
+$con = mysqli_connect('localhost', 'root', 'root', 'ebay_ece');
 
 function row_count($result)
 {

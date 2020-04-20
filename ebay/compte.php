@@ -3,17 +3,30 @@
 
 <?php
 
+if(!logged_in())
+{
+    redirect("index.php");
+}
+
     $email = $_SESSION['email'];
-    $user_details_query = mysqli_query($con, "SELECT * FROM acheteur WHERE email = '$email'");
-    $user_array = mysqli_fetch_array($user_details_query);
-    $first_name = $user_array['first_name'];
-    $last_name = $user_array['last_name'];
-    $address1 = $user_array['Adresse1'];
-    $address2 = $user_array['Adresse2'];
-    $city = $user_array['Ville'];
-    $zip = $user_array['CodePostal'];
-    $country = $user_array['Pays'];
-    $tel = $user_array['Telephone'];
+    $user_details_query = mysqli_query($con, "SELECT * FROM acheteur, paiement WHERE acheteur.email = '$email' AND paiement.mail_acheteur = '$email'");
+    $row = mysqli_fetch_array($user_details_query);
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
+    $address1 = $row['Adresse1'];
+    $address2 = $row['Adresse2'];
+    $city = $row['Ville'];
+    $zip = $row['CodePostal'];
+    $country = $row['Pays'];
+    $tel = $row['Telephone'];
+    $numero = $row['numero'];
+    $crypt_numero = str_repeat("*", strlen($numero)); 
+    $code = $row['code'];
+    $crypt_code = str_repeat("*", strlen($code)); 
+    $nom = $row['nom'];
+    $date = $row['expiration'];
+    $type = $row['type'];
+
 
     ?>
     
@@ -47,13 +60,13 @@
                     Numéro de téléphone : $tel"; ?><br></h6>
             </div>
             <div id="section2">
-                <h4>Coordonnées Banciares</h4><h6><a href="Z.php">Modifier ></a></h6><br>
+                <h4>Coordonnées Banciares</h4><h6><a href="ajouterCarte.php">Modifier ></a></h6><br>
                 <h6> <?php echo 
-                "Type de carte : <br><br>
-                Numéro de la carte : <br><br>
-                Nom de la carte :  <br><br>
-                Date d'expiration : <br><br>
-                Clé de Sécurité : "; ?><br></h6>
+                "Type de carte : $type<br><br>
+                Numéro de la carte : $crypt_numero<br><br>
+                Nom de la carte :  $nom<br><br>
+                Date d'expiration : $date<br><br>
+                Code de Sécurité : $crypt_code"; ?><br></h6>
 
             </div>
             <div id="section3">

@@ -25,7 +25,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="encheres.php">ENCHERES</a>
-                    <a class="dropdown-item" href="acheter_maintenant.php">ACHETER</a>
+                    <a class="dropdown-item" href="acheter_maintenant.php">ACHETER MAINTENANT</a>
                     <a class="dropdown-item" href="meilleures_ventes.php">MEILLEURES VENTES</a>
                 </div>
             </li>
@@ -43,10 +43,28 @@
 				<?php endif;  ?>
             </li>
 
+            
+            <?php if(!logged_in_admin()):  ?>
             <li class="nav-item">
-                <a class="nav-link" href="admin.php">ADMIN</a>
+                <a class="nav-link" href="adminLogin.php">ADMIN</a>
             </li>
+            <?php endif;  ?>
 
+            <li class="nav-item dropdown">
+            <?php if(logged_in_admin()):  ?>
+                <a class="nav-link dropdown-toggle" href="admin.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ADMIN
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="admin.php">COMPTE ADMIN</a>
+                    <a class="dropdown-item" href="ajouterVendeur.php">AJOUTER UN VENDEUR</a>
+                    <a class="dropdown-item" href="modifierVendeur.php">MODIFIER UN VENDEUR</a>
+                    <a class="dropdown-item" href="nouveauxVendeurs.php">NOUVEAUX VENDEURS</a>
+                    <a class="dropdown-item" href="ajouterItem.php">AJOUTER UN ITEM</a>
+                    <a class="dropdown-item" href="modifierItem.php">MODIFIER UN ITEM</a>
+                </div>
+            </li>
+            <?php endif;  ?>
 
             <li class="nav-item">
                 <?php if(logged_in()):  ?>
@@ -57,6 +75,12 @@
             <li class="nav-item">
                 <?php if(logged_in()):  ?>
                     <a class="nav-link" href="logout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i></a>
+                <?php endif;  ?>
+            </li>
+
+            <li class="nav-item">
+                <?php if(logged_in_admin()):  ?>
+                    <a class="nav-link" href="adminLogout.php"><i class="fa fa-sign-out" style="font-size:30px;color:red"></i></a>
                 <?php endif;  ?>
             </li>
 

@@ -3,7 +3,7 @@ include("menu.php");
 
 
 
-$sql = "SELECT * FROM item WHERE Categorie = 'bon pour le musee'";
+$sql = "SELECT * FROM item WHERE Categorie = 'bon pour le musee' GROUP BY ID DESC";
 
 display_item($con, $sql); ?>
 

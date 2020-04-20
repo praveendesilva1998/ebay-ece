@@ -9,7 +9,7 @@ if(isset($_COOKIE['email']))
 }
 
 
-redirect("login.php");
+redirect("index.php");
 
 
 

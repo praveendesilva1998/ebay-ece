@@ -241,9 +241,6 @@ function validate_user_login()
     $min = 5;
     $max = 20;
 
-
-
-
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $email = clean($_POST['email']);
@@ -327,6 +324,89 @@ function login_user($email, $password, $remember)
 function logged_in()
 {
     if(isset($_SESSION['email']) || isset($_COOKIE['email']))
+    {
+        return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
+function validate_user_login_admin()
+{
+    $errors = [];
+    $min = 5;
+    $max = 20;
+
+    if($_SERVER['REQUEST_METHOD'] == "POST")
+    {
+        $email_admin = clean($_POST['email_admin']);
+        $password_admin = clean($_POST['password_admin']);
+
+
+        if(!empty($errors))
+        {
+            foreach ($errors as $error)
+            {
+                echo validation_errors($error);
+            }
+        }
+        else
+        {
+            if(login_user_admin($email_admin, $password_admin))
+            {
+                redirect("admin.php");
+            }
+            else
+            {
+                set_message("<div class='alert alert-danger' role='alert'>
+                Vos identifiants ne sont pas correctes !
+                </div>");
+            }
+        } 
+    }
+
+}
+
+function login_user_admin($email_admin, $password_admin)
+{
+    $sql = "SELECT * FROM admin WHERE login = '".escape($email_admin)."'";
+    $result = query($sql);
+
+    if(row_count($result) == 1)
+    {
+        $row = fetch_array($result);
+        $db_password_admin = $row['password'];
+
+        if($password_admin === $db_password_admin)
+        {
+
+            $_SESSION['login'] = $email_admin;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+
+
+}
+
+
+function logged_in_admin()
+{
+    if(isset($_SESSION['login']) || isset($_COOKIE['login']))
     {
         return true;
 	}
@@ -483,7 +563,110 @@ function password_reset()
 }
 
 
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
+
+
+function validate_user_login_vendeur()
+{
+    $errors = [];
+    $min = 5;
+    $max = 20;
+
+    if($_SERVER['REQUEST_METHOD'] == "POST")
+    {
+        $pseudo_vendeur = clean($_POST['pseudo_vendeur']);
+        $password_vendeur = clean($_POST['password_vendeur']);
+
+
+        if(!empty($errors))
+        {
+            foreach ($errors as $error)
+            {
+                echo validation_errors($error);
+            }
+        }
+        else
+        {
+            if(login_user_vendeur($pseudo_vendeur, $password_vendeur))
+            {
+                redirect("vendeur.php");
+            }
+            else
+            {
+                set_message("<div class='alert alert-danger' role='alert'>
+                Vos identifiants ne sont pas correctes !
+                </div>");
+            }
+        } 
+    }
+
+}
+
+function login_user_vendeur($pseudo_vendeur, $password_vendeur)
+{
+    $sql = "SELECT * FROM vendeur WHERE Pseudo = '".escape($pseudo_vendeur)."'";
+    $result = query($sql);
+
+    if(row_count($result) == 1)
+    {
+        $row = fetch_array($result);
+        $db_password_vendeur = $row['Password'];
+
+        if($password_vendeur === $db_password_vendeur)
+        {
+
+            $_SESSION['Pseudo'] = $pseudo_vendeur;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+
+
+}
+
+
+function logged_in_vendeur()
+{
+    if(isset($_SESSION['Pseudo']) || isset($_COOKIE['Pseudo']))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+
+function email_vendeur_exists($email)
+{
+    $sql = "SELECT ID FROM vendeur WHERE Mail = '$email'";
+    $result = query($sql);
+
+    if(row_count($result) == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
+}
 
 
 

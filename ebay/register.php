@@ -10,7 +10,7 @@
 
         <center><form id="register-form" method="post" role="form">
         <div class="form-group">
-            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" value="<?php
+            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Nom" value="<?php
             if(isset($_SESSION['first_name']))
             {
                 echo $_SESSION['first_name'];
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-            <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" value="<?php
+            <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Prénom" value="<?php
             if(isset($_SESSION['last_name']))
             {
                 echo $_SESSION['last_name'];
@@ -29,7 +29,7 @@
 
         
         <div class="form-group">
-        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" value="<?php
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<?php
                 if(isset($_SESSION['email']))
                 {
                     echo $_SESSION['email'];
@@ -38,15 +38,15 @@
         </div>
 
         <div class="form-group">
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Mot de Passe" required>
         </div>
 
         <div class="form-group">
-            <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password" required> 
+            <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirmer le mot de Passe" required> 
         </div>
 
         <div class="form-group">
-        <input type="text" name="address1" id="address1" class="form-control" placeholder="Address Line 1" value="<?php
+        <input type="text" name="address1" id="address1" class="form-control" placeholder="Adresse Ligne 1" value="<?php
                 if(isset($_SESSION['Adresse1']))
                 {
                     echo $_SESSION['Adresse1'];
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-group">
-        <input type="text" name="address2" id="address2" class="form-control" placeholder="Address Line 2" value="<?php
+        <input type="text" name="address2" id="address2" class="form-control" placeholder="Adresse Ligne 2" value="<?php
                 if(isset($_SESSION['Adresse2']))
                 {
                     echo $_SESSION['Adresse2'];
@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group">
-        <input type="text" name="zip" id="zip" class="form-control" placeholder="ZIP Code" value="<?php
+        <input type="text" name="zip" id="zip" class="form-control" placeholder="Code Postal" value="<?php
                 if(isset($_SESSION['CodePostal']))
                 {
                     echo $_SESSION['CodePostal'];
@@ -73,7 +73,7 @@
         </div>
 
         <div class="form-group">
-        <input type="text" name="city" id="city" class="form-control" placeholder="City" value="<?php
+        <input type="text" name="city" id="city" class="form-control" placeholder="Ville" value="<?php
                 if(isset($_SESSION['Ville']))
                 {
                     echo $_SESSION['Ville'];
@@ -82,7 +82,7 @@
         </div>
 
         <div class="form-group">
-        <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="<?php
+        <input type="text" name="country" id="country" class="form-control" placeholder="Pays" value="<?php
                 if(isset($_SESSION['Pays']))
                 {
                     echo $_SESSION['Pays'];
@@ -91,7 +91,7 @@
         </div>
 
         <div class="form-group">
-        <input type="text" name="tel" id="tel" class="form-control" placeholder="Phone Number" value="<?php
+        <input type="text" name="tel" id="tel" class="form-control" placeholder="Téléphone" value="<?php
                 if(isset($_SESSION['Telephone']))
                 {
                     echo $_SESSION['Telephone'];
